@@ -1,4 +1,5 @@
 (sym_lib_table
   (lib (name oled_display)(type Legacy)(uri /home/user/arduino-workspace/power219plot/hw/kicad-project/KiCad-SSD1306_OLED-0.91-128x32/SSD1306_OLED-0.91-128x32.lib)(options "")(descr ""))
   (lib (name Adafruit_INA219_CurPowerMonitor-eagle-import)(type Legacy)(uri ${KIPRJMOD}/Adafruit_INA219_CurPowerMonitor-eagle-import.lib)(options "")(descr ""))
+  (lib (name project-rescue)(type Legacy)(uri ${KIPRJMOD}/project-rescue.lib)(options "")(descr ""))
 )
