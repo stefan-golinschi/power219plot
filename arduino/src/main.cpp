@@ -36,7 +36,7 @@ void setup(void) {
 	// Or to use a lower 16V, 400mA range (higher precision on volts and amps):
 	//ina219.setCalibration_16V_400mA();
 
-	Serial.println("Initializing display...");
+	//Serial.println("Initializing display...");
 
 	if (ssd1306_display::setup() == false) {
 		Serial.println(F("SSD1306 allocation failed"));

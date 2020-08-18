@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import serial
+import time
 
 # initialize serial port
 ser = serial.Serial()
-ser.port = '/dev/ttyUSB1'  # Arduino serial port
+ser.port = '/dev/ttyUSB5'  # Arduino serial port
 ser.baudrate = 115200
 
 ser.timeout = 10  # specify timeout when using readline()
@@ -12,6 +13,8 @@ ser.open()
 if ser.is_open == True:
     print("\nAll right, serial port now open. Configuration:\n")
     print(ser, "\n")  # print serial parameters
+    
+start_time = time.time()
 
 # Create figure for plotting
 fig = plt.figure()
@@ -53,10 +56,12 @@ def animate(i, xs, ys):
         print("CSV Header detected, pass this.")
         return
 
-    timestamp = float(line_as_list[0])
-    current_mA = float(line_as_list[4])
-    power_mW = float(line_as_list[5])
-    bus_voltage = float(line_as_list[1])
+    timestamp = time.time() - start_time
+    bus_voltage = float(line_as_list[0])
+    shuntvoltage = float(line_as_list[1])
+    loadvoltage = float(line_as_list[2])
+    current_mA = float(line_as_list[3])
+    power_mW = float(line_as_list[4])
 
     global first_reading
     global current_avg
@@ -90,7 +95,7 @@ def animate(i, xs, ys):
         current_avg = current_avg_rem / current_avg_count
 
     # Add x and y to lists
-    xs.append(timestamp / 1000)
+    xs.append(timestamp)
     ys.append(current_mA)
     rs.append(power_mW)
 
@@ -120,7 +125,7 @@ def animate(i, xs, ys):
 
     plt.axis([
         0, None, # x axis boundaries
-        0, None # y axis boundaries
+        0, 20 # y axis boundaries
     ])  # Use for 100 trial demo
 
 
