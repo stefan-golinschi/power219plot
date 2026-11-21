@@ -107,3 +107,6 @@ bom/
 
 # Gerber export output
 out/
+
+# Freecad backup
+*.FCBak
