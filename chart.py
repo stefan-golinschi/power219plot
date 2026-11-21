@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import signal
 import time
 
 import matplotlib.animation as animation
@@ -32,6 +33,7 @@ def main():
 
     ser = serial.Serial(port=args.port, baudrate=args.baud, timeout=10)
     print('Serial port open:\n', ser, '\n')
+    print('Press Ctrl-C to stop.\n')
 
     start_time = time.time()
     fig = plt.figure()
@@ -47,15 +49,36 @@ def main():
     peak_current = -1.0
     min_current = 99.0
     min_voltage = 99.0
+    shutting_down = False
 
     with open(args.output, 'w'):
         pass
+
+    def shutdown(_signum=None, _frame=None):
+        nonlocal shutting_down
+        if shutting_down:
+            return
+        shutting_down = True
+        print('\nShutting down...', flush=True)
+        plt.close('all')
+        if ser.is_open:
+            ser.close()
+
+    signal.signal(signal.SIGINT, shutdown)
 
     def animate(_frame):
         nonlocal current_avg, current_avg_rem, current_avg_count
         nonlocal first_reading, peak_current, min_current, min_voltage
 
-        line = ser.readline()
+        if shutting_down or not ser.is_open:
+            return
+
+        try:
+            line = ser.readline()
+        except (serial.SerialException, OSError):
+            shutdown()
+            return
+
         try:
             line = line.decode('utf-8')
         except UnicodeDecodeError:
@@ -139,11 +162,16 @@ def main():
         plt.legend()
         plt.axis([0, None, 0, 20])
 
-    animation.FuncAnimation(fig, animate, interval=100)
+    # Keep a reference so the animation is not GC'd before plt.show().
+    _ani = animation.FuncAnimation(
+        fig, animate, interval=100, cache_frame_data=False)
     try:
         plt.show()
+    except KeyboardInterrupt:
+        shutdown()
     finally:
-        ser.close()
+        shutdown()
+        print('Done. Log saved to', args.output)
 
 
 if __name__ == '__main__':
