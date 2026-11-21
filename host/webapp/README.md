@@ -25,6 +25,8 @@ python app.py -p /dev/ttyUSB0 -o results.jsonl --http-port 8080
 
 Open http://127.0.0.1:5000/
 
+Chart.js **4.4.8** is vendored under `static/js/` (no CDN required).
+
 ### Options
 
 | Flag | Default | Description |
