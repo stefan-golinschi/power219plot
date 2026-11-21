@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdint.h>
 
 /*
@@ -6,4 +7,4 @@
  *
  */
 void divide_value(uint32_t value, uint32_t dividend, uint8_t decimal_points,
-		char *result);
+		char *result, size_t result_len);
