@@ -26,7 +26,7 @@ void setup(void) {
 	// By default the initialization will use the largest range (32V, 2A).  However
 	// you can call a setCalibration function to change this range (see comments).
 	if (!ina219.begin()) {
-		Serial.println("Failed to find INA219 chip");
+		Serial.println(F("{\"error\":\"ina219_not_found\"}"));
 		while (1) {
 			delay(10);
 		}
@@ -39,7 +39,7 @@ void setup(void) {
 	//Serial.println("Initializing display...");
 
 	if (ssd1306_display::setup() == false) {
-		Serial.println(F("SSD1306 allocation failed"));
+		Serial.println(F("{\"error\":\"ssd1306_alloc_failed\"}"));
 
 		/* loop forever */
 		while (1) {
@@ -74,16 +74,22 @@ void loop(void) {
 
 	loadvoltage = busvoltage + (shuntvoltage / 1000);
 
-	/* Keep the UART stream CSV-only so the host logger never breaks. */
-	Serial.print(busvoltage); Serial.print(',');
-	Serial.print(shuntvoltage); Serial.print(',');
-	Serial.print(loadvoltage); Serial.print(',');
-	Serial.print(current_mA); Serial.print(',');
-	Serial.println(power_mW);
+	/* One JSON object per line (NDJSON) keeps the host parser simple. */
+	Serial.print(F("{\"bus_V\":"));
+	Serial.print(busvoltage);
+	Serial.print(F(",\"shunt_mV\":"));
+	Serial.print(shuntvoltage);
+	Serial.print(F(",\"load_V\":"));
+	Serial.print(loadvoltage);
+	Serial.print(F(",\"current_mA\":"));
+	Serial.print(current_mA);
+	Serial.print(F(",\"power_mW\":"));
+	Serial.print(power_mW);
+	Serial.println(F("}"));
 
 	int32_t abs_current_uA = current_uA < 0 ? -current_uA : current_uA;
 	if (abs_current_uA > MAX_VALUE) {
-		/* Skip OLED/stats for this sample; do not emit free-form text. */
+		/* Skip OLED/stats for this sample; sample line already emitted. */
 		delay(1000);
 		return;
 	}
