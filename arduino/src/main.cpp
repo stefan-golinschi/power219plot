@@ -26,7 +26,7 @@ void setup(void) {
 	// By default the initialization will use the largest range (32V, 2A).  However
 	// you can call a setCalibration function to change this range (see comments).
 	if (!ina219.begin()) {
-		Serial.println("Failed to find INA219 chip");
+		Serial.println(F("{\"error\":\"ina219_not_found\"}"));
 		while (1) {
 			delay(10);
 		}
@@ -39,7 +39,7 @@ void setup(void) {
 	//Serial.println("Initializing display...");
 
 	if (ssd1306_display::setup() == false) {
-		Serial.println(F("SSD1306 allocation failed"));
+		Serial.println(F("{\"error\":\"ssd1306_alloc_failed\"}"));
 
 		/* loop forever */
 		while (1) {
@@ -48,41 +48,49 @@ void setup(void) {
 	}
 }
 
-uint32_t lowest_current = 9999;
-uint32_t highest_current = 0;
+int32_t lowest_current = 9999;
+int32_t highest_current = 0;
 
 char average_current[8];
 int average_nvalues = 2;
 char current_mA_str[8];
 
-uint32_t stored_values[MAX_STORED_VALUES] = { 0 };
+int32_t stored_values[MAX_STORED_VALUES] = { 0 };
 int loop_count = 0;
 
 void loop(void) {
 	float shuntvoltage = 0;
 	float busvoltage = 0;
 	float current_mA = 0;
-	uint32_t current_uA = 0;
+	int32_t current_uA = 0;
 	float loadvoltage = 0;
 	float power_mW = 0;
 
 	shuntvoltage = ina219.getShuntVoltage_mV();
 	busvoltage = ina219.getBusVoltage_V();
 	current_mA = ina219.getCurrent_mA();
-	current_uA = current_mA * 1000;
+	current_uA = (int32_t)(current_mA * 1000.0f);
 	power_mW = ina219.getPower_mW();
 
 	loadvoltage = busvoltage + (shuntvoltage / 1000);
 
-	Serial.print(busvoltage); Serial.print(", ");
-	Serial.print(shuntvoltage); Serial.print(", ");
-	Serial.print(loadvoltage); Serial.print(", ");
-	Serial.print(current_mA); Serial.print(", ");
-	Serial.print(power_mW); Serial.println("");
+	/* One JSON object per line (NDJSON) keeps the host parser simple. */
+	Serial.print(F("{\"bus_V\":"));
+	Serial.print(busvoltage);
+	Serial.print(F(",\"shunt_mV\":"));
+	Serial.print(shuntvoltage);
+	Serial.print(F(",\"load_V\":"));
+	Serial.print(loadvoltage);
+	Serial.print(F(",\"current_mA\":"));
+	Serial.print(current_mA);
+	Serial.print(F(",\"power_mW\":"));
+	Serial.print(power_mW);
+	Serial.println(F("}"));
 
-	if (current_uA > MAX_VALUE) {
-		Serial.print("Overcurrent error: current_uA:");
-		Serial.println(current_uA);
+	int32_t abs_current_uA = current_uA < 0 ? -current_uA : current_uA;
+	if (abs_current_uA > MAX_VALUE) {
+		/* Skip OLED/stats for this sample; sample line already emitted. */
+		delay(1000);
 		return;
 	}
 
@@ -99,14 +107,23 @@ void loop(void) {
 //divide_value(current_uA, 1000, 2, current_mA_str);
 
 	if (loop_count == average_nvalues) {
-
-		uint32_t total = 0;
+		int32_t total = 0;
 
 		for (int i = 0; i < average_nvalues; i++) {
 			total += stored_values[i];
 		}
 
-		divide_value(total, average_nvalues * 1000, 2, average_current);
+		char *out = average_current;
+		size_t out_len = sizeof(average_current);
+		uint32_t abs_total = (uint32_t)total;
+		if (total < 0) {
+			average_current[0] = '-';
+			out = average_current + 1;
+			out_len = sizeof(average_current) - 1;
+			abs_total = (uint32_t)(-total);
+		}
+		divide_value(abs_total, (uint32_t)average_nvalues * 1000, 2, out,
+				out_len);
 
 		average_nvalues += 2;
 

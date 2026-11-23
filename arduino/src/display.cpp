@@ -18,7 +18,7 @@ void ssd1306_display::draw_statusbar() {
 		display.print(" ");
 	blink = !blink;
 
-	display.print(" power219plot  v0.1 ");
+	display.print(" power219plot  v0.2 ");
 }
 
 void ssd1306_display::draw_text(String text) {

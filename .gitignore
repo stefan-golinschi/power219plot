@@ -1,112 +1,47 @@
-### Eclipse ###
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
 
-# External tool builders
-.externalToolBuilders/
+# Capture logs
+*.csv
+*.jsonl
 
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
-
-# CDT-specific (C/C++ Development Tooling)
-.cproject
-
-# CDT- autotools
-.autotools
-
-# Java annotation processor (APT)
-.factorypath
-
-# PDT-specific (PHP Development Tools)
-.buildpath
-
-# sbteclipse plugin
-.target
-
-# Tern plugin
-.tern-project
-
-# TeXlipse plugin
-.texlipse
-
-# STS (Spring Tool Suite)
-.springBeans
-
-# Code Recommenders
-.recommenders/
-
-# Annotation Processing
-.apt_generated/
-.apt_generated_test/
-
-# Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
-.scala_dependencies
-.worksheet
-
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
-
-### Eclipse Patch ###
-# Spring Boot Tooling
-.sts4-cache/
-
-### PlatformIO ###
-.pioenvs
-.piolibdeps
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
 .clang_complete
 .gcc-flags.json
-.pio
+arduino/.vscode/
 
-### KiCad ###
-# For PCBs designed using KiCad: http://www.kicad-pcb.org/
-# Format documentation: http://kicad-pcb.org/help/file-formats/
-
-# Temporary files
-*.000
-*.bak
-*.bck
-*.kicad_pcb-bak
-*.sch-bak
-*~
-_autosave-*
-*.tmp
+# KiCad
+*-backups/
+.history/
+fp-info-cache
+*.kicad_prl
+*.lck
+*_autosave-*
 *-save.pro
 *-save.kicad_pcb
-fp-info-cache
-
-# Netlist files (exported from Eeschema)
+*.kicad_pcb-bak
+*.sch-bak
+*.bak
+*.bck
+*.000
+rescue-backup/
 *.net
-
-# Autorouter files (exported from Pcbnew)
 *.dsn
 *.ses
-
-# Exported BOM files
-*.xml
-*.csv
-
-### KiCad Patch ###
-rescue-backup/
-
-*.tsv
 bom/
-
-# Gerber export output
 out/
 
-# Freecad backup
+# FreeCAD
 *.FCBak
+
+# Editor / OS
+*~
+*.swp
+*.tmp
+.DS_Store

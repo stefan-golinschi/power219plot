@@ -1,0 +1,66 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/include",
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/src",
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit INA219",
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit SSD1306",
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit GFX Library",
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit BusIO",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
+                "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit NeoPixel",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/include",
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/src",
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit INA219",
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit SSD1306",
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit GFX Library",
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit BusIO",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
+                    "/home/stefan/work/xsm-workspace/pcb-making/power219plot/arduino/.pio/libdeps/nanoatmega328/Adafruit NeoPixel",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/home/stefan/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60200",
+                "ARDUINO_AVR_NANO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "compilerPath": "/home/stefan/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
